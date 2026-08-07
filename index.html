@@ -5,359 +5,434 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sangsidhya Kar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --ink: #060810;
+            --violet: #6e5bff;
+            --cyan: #4fd8e8;
+            --amber: #ffb37a;
+            --text: #f3f4f8;
+            --muted: #98a1ba;
+            --glass-border: rgba(255,255,255,0.14);
+            --ease-liquid: cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
-            background: #0d1117;
-            color: #c9d1d9;
+            font-family: 'Inter', sans-serif;
+            background: var(--ink);
+            color: var(--text);
             line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* Navigation */
-        nav {
-            padding: 2rem 0;
-            border-bottom: 1px solid #21262d;
-            position: sticky;
-            top: 0;
-            background: #0d1117;
-            z-index: 100;
-        }
-
-        .nav-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
             position: relative;
         }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            position: relative;
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05), transparent 60%),
+                        radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.6), transparent 70%);
+            pointer-events: none;
         }
 
-        .nav-links li {
-            position: relative;
-        }
-
-        .nav-links a {
-            color: #8b949e;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s ease;
-            padding: 0.5rem 0;
-            display: block;
-        }
-
-        .nav-links a:hover {
-            color: #c9d1d9;
-        }
-
-        .nav-links a.active {
-            color: #58a6ff;
-        }
-
-        /* Animated underline */
-        .nav-underline {
+        /* Aurora backdrop — the color field the glass will refract */
+        .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+        .blob {
             position: absolute;
-            bottom: -1px;
-            height: 2px;
-            background: #58a6ff;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 50%;
+            filter: blur(90px);
+            opacity: 0.55;
+            mix-blend-mode: screen;
+            will-change: transform;
+        }
+        .b1 {
+            width: 60vmax; height: 60vmax; top: -22%; left: -18%;
+            background: radial-gradient(circle at 30% 30%, var(--violet), transparent 70%);
+            animation: drift1 46s ease-in-out infinite alternate;
+        }
+        .b2 {
+            width: 52vmax; height: 52vmax; bottom: -26%; right: -12%;
+            background: radial-gradient(circle at 60% 40%, var(--cyan), transparent 70%);
+            animation: drift2 58s ease-in-out infinite alternate;
+        }
+        .b3 {
+            width: 46vmax; height: 46vmax; top: 28%; right: 18%;
+            background: radial-gradient(circle at 50% 50%, var(--amber), transparent 70%);
+            animation: drift3 64s ease-in-out infinite alternate;
+        }
+        @keyframes drift1 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(8%,10%) rotate(25deg); } }
+        @keyframes drift2 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(-10%,-6%) rotate(-20deg); } }
+        @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-6%,8%) scale(1.15); } }
+
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035; mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
         }
 
-        /* Main content */
-        main {
-            padding: 4rem 0;
-            min-height: calc(100vh - 200px);
+        /* ---------- Glass primitive ---------- */
+        .glass {
+            position: relative;
+            isolation: isolate;
+            border-radius: var(--r, 20px);
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.03);
+            box-shadow:
+                inset 0 1px 1px rgba(255,255,255,0.55),
+                inset 0 -1px 14px rgba(255,255,255,0.06),
+                0 24px 48px -20px rgba(0,0,0,0.65);
+        }
+        .glass::before {
+            content: "";
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            backdrop-filter: blur(4px) saturate(160%) brightness(1.05);
+            -webkit-backdrop-filter: blur(4px) saturate(160%) brightness(1.05);
+            filter: url(#glass-distortion);
+            z-index: -1;
+        }
+        .glass-interactive::after {
+            content: "";
+            position: absolute; inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background: radial-gradient(220px circle at var(--mx,50%) var(--my,15%), rgba(255,255,255,0.4), transparent 60%);
+            mix-blend-mode: overlay;
+            opacity: 0.9;
         }
 
-        .content-section {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
+        a { color: inherit; }
+        a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
 
-        .content-section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Home section */
-        .home-content {
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            margin-top: 2rem;
-        }
-
-      .profile-image {
-    width: 200px;
-    height: 200px;
-    border: 3px solid #30363d;
-    border-radius: 50%;
-    background: #161b22;
-    background-size: cover;
-    background-position: center;
-    flex-shrink: 0;
-}
-
-        .intro {
-            flex: 1;
-        }
-
-        .intro h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #c9d1d9;
-        }
-
-        .intro p {
-            font-size: 1.1rem;
-            color: #8b949e;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Section styling */
-        h2 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
-            color: #c9d1d9;
-        }
-
-        .card {
-            background: #161b22;
-            border: 1px solid #30363d;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            transition: border-color 0.3s ease, transform 0.2s ease;
-        }
-
-        .card:hover {
-            border-color: #58a6ff;
-            transform: translateY(-2px);
-        }
-
-        .card h3 {
-            color: #58a6ff;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
-        }
-
-        .card p {
-            color: #8b949e;
-            line-height: 1.7;
-        }
-
-        .project-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        /* Contact section */
-        .contact-links {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .contact-link {
-            display: inline-block;
-            color: #58a6ff;
-            text-decoration: none;
-            font-size: 1.1rem;
+        /* ---------- Nav ---------- */
+        .site-nav { position: fixed; top: 20px; left: 0; right: 0; display: flex; justify-content: center; z-index: 50; padding: 0 16px; }
+        .nav-inner { --r: 999px; display: flex; align-items: center; padding: 6px; }
+        .nav-links { list-style: none; display: flex; gap: 2px; position: relative; z-index: 2; }
+        .nav-links a {
+            position: relative; z-index: 2; display: block;
+            padding: 0.6rem 1.15rem; border-radius: 999px;
+            color: var(--muted); text-decoration: none;
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
+            letter-spacing: 0.05em; text-transform: uppercase;
             transition: color 0.3s ease;
         }
+        .nav-links a.active, .nav-links a:hover { color: var(--text); }
+        .nav-pill { --r: 999px; position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); z-index: 1;
+            transition: left 0.5s var(--ease-liquid), width 0.5s var(--ease-liquid); }
 
-        .contact-link:hover {
-            color: #79c0ff;
+        /* ---------- Layout ---------- */
+        main { padding: 9rem 0 5rem; min-height: calc(100vh - 200px); position: relative; z-index: 1; touch-action: pan-y; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+
+        .content-section { display: none; }
+        .content-section.active { display: block; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+        .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.75rem; }
+        h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.25rem; }
+        h2 { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: clamp(1.9rem, 3.4vw, 2.5rem); margin-bottom: 2rem; }
+
+        /* Home */
+        .home-grid { display: flex; align-items: center; gap: 3.5rem; flex-wrap: wrap; }
+        .portrait-frame { --r: 50%; width: 200px; height: 200px; flex-shrink: 0; padding: 6px; }
+        .portrait { width: 100%; height: 100%; border-radius: 50%; background-size: cover; background-position: center; background-color: rgba(255,255,255,0.04); }
+        .intro { flex: 1; min-width: 280px; }
+        .lede { font-size: 1.1rem; max-width: 56ch; margin-bottom: 0.85rem; }
+        .lede-sub { color: var(--muted); margin-bottom: 1.6rem; }
+        .text-link { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(79,216,232,0.35); transition: border-color 0.3s ease, color 0.3s ease; }
+        .text-link:hover { color: var(--amber); border-color: rgba(255,179,122,0.6); }
+        .chip { --r: 999px; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem;
+            font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase;
+            text-decoration: none; transition: transform 0.35s var(--ease-liquid); }
+        .chip:hover { transform: translateY(-3px); }
+
+        /* Cards */
+        .card-grid, .paper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        .card { --r: 20px; padding: 1.75rem; transition: transform 0.4s var(--ease-liquid); }
+        .card:hover { transform: translateY(-4px); }
+        .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
+            color: var(--amber); background: rgba(255,179,122,0.12); border: 1px solid rgba(255,179,122,0.3); padding: 0.3rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; }
+        .card h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.6rem; }
+        .card p { color: var(--muted); font-size: 0.94rem; }
+
+        .paper { --r: 22px; padding: 2rem; transition: transform 0.4s var(--ease-liquid); }
+        .paper:hover { transform: translateY(-4px); }
+        .paper h3 { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.35rem; margin: 0.75rem 0 1.1rem; font-weight: 500; }
+        .arrow-link { text-decoration: none; }
+        .arrow-link::after { content: " →"; display: inline-block; transition: margin-left 0.3s var(--ease-liquid); }
+        .arrow-link:hover::after { margin-left: 0.35em; }
+
+        /* Contacts */
+        .note { color: var(--muted); font-style: italic; margin-bottom: 1.6rem; }
+        .contact-grid { --r: 22px; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.2rem; max-width: 480px; }
+        .contact-row { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; border-radius: 14px;
+            text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
+            transition: background 0.3s ease, transform 0.3s var(--ease-liquid); }
+        .contact-row:hover { background: rgba(255,255,255,0.06); transform: translateX(4px); }
+        .contact-row .icon { width: 19px; height: 19px; color: var(--cyan); flex-shrink: 0; }
+        .contact-row .icon svg { width: 100%; height: 100%; }
+
+        @media (max-width: 768px) {
+            .home-grid { flex-direction: column; text-align: center; }
+            .nav-links a { padding: 0.55rem 0.8rem; font-size: 0.7rem; }
         }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            .home-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .intro h1 {
-                font-size: 2rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .project-grid {
-                grid-template-columns: 1fr;
-            }
+        @media (prefers-reduced-motion: reduce) {
+            .blob { animation: none !important; }
+            html { scroll-behavior: auto; }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="nav-content">
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="#home" class="nav-link active" data-target="home">Home</a></li>
-                    <li><a href="#activities" class="nav-link" data-target="activities">Activities </a></li>
-                    <li><a href="#work" class="nav-link" data-target="work">Work</a></li>
-                    <li><a href="#contacts" class="nav-link" data-target="contacts">Contacts</a></li>
-                </ul>
-                <div class="nav-underline" id="navUnderline"></div>
-            </div>
+
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+            <filter id="glass-distortion" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="noise"/>
+                <feGaussianBlur in="noise" stdDeviation="3" result="blurred"/>
+
+                <!-- Each wavelength refracts at a slightly different rate (dispersion) — blue bends most, red least -->
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="31" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
+                <feColorMatrix in="dispR" type="matrix"
+                    values="1 0 0 0 0
+                            0 0 0 0 0
+                            0 0 0 0 0
+                            0 0 0 1 0" result="red"/>
+
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="35" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
+                <feColorMatrix in="dispG" type="matrix"
+                    values="0 0 0 0 0
+                            0 1 0 0 0
+                            0 0 0 0 0
+                            0 0 0 1 0" result="green"/>
+
+                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="40" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
+                <feColorMatrix in="dispB" type="matrix"
+                    values="0 0 0 0 0
+                            0 0 0 0 0
+                            0 0 1 0 0
+                            0 0 0 1 0" result="blue"/>
+
+                <feBlend in="red" in2="green" mode="screen" result="rg"/>
+                <feBlend in="rg" in2="blue" mode="screen"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <div class="aurora" aria-hidden="true">
+        <span class="blob b1"></span>
+        <span class="blob b2"></span>
+        <span class="blob b3"></span>
+    </div>
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <nav class="site-nav">
+        <div class="nav-inner glass" id="navInner">
+            <span class="nav-pill glass" id="navPill" aria-hidden="true"></span>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="nav-link active" data-target="home">Home</a></li>
+                <li><a href="#activities" class="nav-link" data-target="activities">Activities</a></li>
+                <li><a href="#work" class="nav-link" data-target="work">Work</a></li>
+                <li><a href="#contacts" class="nav-link" data-target="contacts">Contacts</a></li>
+            </ul>
         </div>
     </nav>
 
     <main>
         <div class="container">
+
             <section id="home" class="content-section active">
-                <div class="home-content">
-                    <div class="profile-image" style="background-image: url('filepic.jpg');"></div>
+                <div class="home-grid">
+                    <div class="portrait-frame glass glass-interactive">
+                        <div class="portrait" style="background-image: url('filepic.jpg');"></div>
+                    </div>
                     <div class="intro">
-                        <h1>About Me</h1>
-                        <p>I'm Sangsidhya Kar, an undergraduate majoring in <a href="https://www.presiuniv.ac.in/web/statistics.php" style="color: rgb(12, 147, 236);">Statistics at Presidency University</a>. I'm primariy interested in Probability and its applications. I also like coding, where I primarily work with Java or Python. Beyond academics, I like to engage in chess, reading non-fiction, and playing the piano.   </p>
-                        <p>Explore my work, activities, and feel free to get in touch!</p>
-                        <p> <a href="https://drive.google.com/file/d/1EGxHlLBTnZgiIgJ9zfsgRrZfdejELrEW/view?usp=sharing" style="color: rgb(12, 147, 236);">Find my CV here</a> </p>
+                        <p class="eyebrow">Statistics · Presidency University</p>
+                        <h1>Sangsidhya Kar</h1>
+                        <p class="lede">I'm an undergraduate majoring in <a href="https://www.presiuniv.ac.in/web/statistics.php" class="text-link">Statistics at Presidency University</a>, primarily interested in probability and its applications. I like to code — mostly in Java and Python — and outside of academics I play chess, read non-fiction, and play the piano.</p>
+                        <p class="lede-sub">Explore my work and activities below, or find your way to get in touch.</p>
+                        <a href="https://drive.google.com/file/d/1EGxHlLBTnZgiIgJ9zfsgRrZfdejELrEW/view?usp=sharing" class="chip glass glass-interactive">View CV</a>
                     </div>
                 </div>
             </section>
 
             <section id="activities" class="content-section">
-               <h2>Activities and Accolades</h2>
-                 <div class="project-grid">
-                    <div class="card">
-                        <h3>MTRP  awardee</h3>
-                        <p>Was selected in the MTRP'24 camp, conducted by the students of Indian Staistical Institute Kolkata.</p>
-                    </div>
-                      <div class="card">
-                        <h3>LIMIT awardee</h3>
-                        <p>Was selected in the LIMIT'25 camp, conducted by the students of Indian Staistical Institute, Bangalore.</p>
-                    </div>
-                      <div class="card">
+                <p class="eyebrow">Record</p>
+                <h2>Activities &amp; Accolades</h2>
+                <div class="card-grid">
+                    <article class="card glass glass-interactive">
+                        <span class="tag">2024</span>
+                        <h3>MTRP Awardee</h3>
+                        <p>Selected for the MTRP'24 camp, conducted by students of the Indian Statistical Institute, Kolkata.</p>
+                    </article>
+                    <article class="card glass glass-interactive">
+                        <span class="tag">2025</span>
+                        <h3>LIMIT Awardee</h3>
+                        <p>Selected for the LIMIT'25 camp, conducted by students of the Indian Statistical Institute, Bangalore.</p>
+                    </article>
+                    <article class="card glass glass-interactive">
+                        <span class="tag">Rank 24 · East Zone</span>
                         <h3>Madhava Awardee</h3>
-                        <p>Stood #24th in the Madhva Math Competition (East Zone). Was honoured to attend the Camp from 22nd to 26th June, 2026.</p>
-                    </div>
-                    <div class ="card">
-                        <h3> IISc Enumeration</h3>
-                        <p> Stood third in the challenging math competition organised by IISc's Pravega.</p>
-                    </div>
-                     <div class ="card">
-                        <h3> 15th Statistics Olympiad</h3>
-                        <p> Stood third in the 15th Statistics Olympiad conducted by AIMSCS.</p>
-                    </div>
-                    <div class="card">
+                        <p>Placed 24th in the Madhava Mathematics Competition (East Zone) and attended the camp from 22–26 June 2026.</p>
+                    </article>
+                    <article class="card glass glass-interactive">
+                        <span class="tag">Rank 3</span>
+                        <h3>IISc Enumeration</h3>
+                        <p>Placed third in Enumeration, the mathematics competition organised by IISc's Pravega.</p>
+                    </article>
+                    <article class="card glass glass-interactive">
+                        <span class="tag">Rank 3</span>
+                        <h3>15th Statistics Olympiad</h3>
+                        <p>Placed third in the 15th Statistics Olympiad, conducted by AIMSCS.</p>
+                    </article>
+                    <article class="card glass glass-interactive">
+                        <span class="tag">2025 Batch</span>
                         <h3>Passed ISC</h3>
-                        <p>Contribution to score:</p>
-                        <p>Highest: 99/100 (English) Lowest: 90/100(Physics)</p>
-                        </div>
-                        </div>
-                
+                        <p>Highest score: 99/100 in English. Lowest score: 90/100 in Physics.</p>
+                    </article>
+                </div>
             </section>
 
             <section id="work" class="content-section">
-                <h2>Work and Projects</h2>
-                <div class="project-grid">
-                    <div class="card">
-                        <h3>Global games with heavy-tailed distributions
-</h3>
-                        <p><a href="https://drive.google.com/file/d/1q1YUYLpjqq3fn5cOka3zQ5PH3j4_JbUo/view?usp=sharing" style="color: aquamarine;">Link to paper</a></p>
-                    </div>
-                    
-                </div>
-                
-                <div class="project-grid">
-                    <div class="card">
-                        <h3>On Operator Algebras and Quantum Theory
-
-</h3>
-                        <p><a href="https://drive.google.com/file/d/1H_u-EIeUBRmMPdYXltZn-7pWeMPk-jI1/view?usp=sharing" style="color: aquamarine;">Link</a></p>
-                    </div>
-                    
+                <p class="eyebrow">Research</p>
+                <h2>Work &amp; Projects</h2>
+                <div class="paper-grid">
+                    <article class="paper glass glass-interactive">
+                        <span class="tag">Paper</span>
+                        <h3>Global games with heavy-tailed distributions</h3>
+                        <a href="https://drive.google.com/file/d/1q1YUYLpjqq3fn5cOka3zQ5PH3j4_JbUo/view?usp=sharing" class="text-link arrow-link">Read the paper</a>
+                    </article>
+                    <article class="paper glass glass-interactive">
+                        <span class="tag">Notes</span>
+                        <h3>On Operator Algebras and Quantum Theory</h3>
+                        <a href="https://drive.google.com/file/d/1H_u-EIeUBRmMPdYXltZn-7pWeMPk-jI1/view?usp=sharing" class="text-link arrow-link">Read the paper</a>
+                    </article>
                 </div>
             </section>
 
             <section id="contacts" class="content-section">
+                <p class="eyebrow">Reach</p>
                 <h2>Get in Touch</h2>
-                <p><em>Note that these are my only legitimate modes of communication:</em></p>
-                <br>                
-                <div class="contact-links">
-                    <a href="mailto:sangsidhyakar@gmail.com" class="contact-link"> sangsidhyakar@gmail.com</a>
-                    <a href="https://github.com/Sangsidhya" class="contact-link"> GitHub: Sangsidhya 
-</a>
-                    <a href="https://www.linkedin.com/in/sangsidhya-kar-55375020a/" class="contact-link"> LinkedIn Profile</a>
-                    <a href="https://www.youtube.com/@sangsidhyakar" class="contact-link"> Youtube: @sangsidhyakar
-</a>
+                <p class="note">These are my only legitimate modes of communication.</p>
+                <div class="contact-grid glass glass-interactive">
+                    <a href="mailto:sangsidhyakar@gmail.com" class="contact-row">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+                        sangsidhyakar@gmail.com
+                    </a>
+                    <a href="https://github.com/Sangsidhya" class="contact-row">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6L3 12l5 6M16 6l5 6-5 6"/></svg></span>
+                        GitHub — Sangsidhya
+                    </a>
+                    <a href="https://www.linkedin.com/in/sangsidhya-kar-55375020a/" class="contact-row">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>
+                        LinkedIn Profile
+                    </a>
+                    <a href="https://www.youtube.com/@sangsidhyakar" class="contact-row">
+                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="4"/><path d="M10 9l6 3-6 3V9z" fill="currentColor" stroke="none"/></svg></span>
+                        YouTube — @sangsidhyakar
+                    </a>
                 </div>
             </section>
+
         </div>
     </main>
 
     <script>
-        // Navigation functionality
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.content-section');
-        const underline = document.getElementById('navUnderline');
+        const pill = document.getElementById('navPill');
+        const navInner = document.getElementById('navInner');
 
-        function updateUnderline(link) {
+        function movePill(link) {
             const linkRect = link.getBoundingClientRect();
-            const navRect = document.getElementById('navLinks').getBoundingClientRect();
-            underline.style.width = `${linkRect.width}px`;
-            underline.style.left = `${linkRect.left - navRect.left}px`;
+            const navRect = navInner.getBoundingClientRect();
+            pill.style.width = linkRect.width + 'px';
+            pill.style.left = (linkRect.left - navRect.left) + 'px';
         }
 
-        // Initialize underline position
-        const activeLink = document.querySelector('.nav-link.active');
-        updateUnderline(activeLink);
+        function initPill() {
+            const active = document.querySelector('.nav-link.active');
+            if (active) movePill(active);
+        }
+
+        window.addEventListener('load', initPill);
+        window.addEventListener('resize', initPill);
+        requestAnimationFrame(() => requestAnimationFrame(initPill));
+
+        const sectionOrder = ['home', 'activities', 'work', 'contacts'];
+
+        function activateSection(target) {
+            const link = document.querySelector(`.nav-link[data-target="${target}"]`);
+            if (!link) return;
+            navLinks.forEach(l => l.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+            link.classList.add('active');
+            document.getElementById(target).classList.add('active');
+            movePill(link);
+        }
 
         navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
-                
-                // Remove active class from all links and sections
-                navLinks.forEach(l => l.classList.remove('active'));
-                sections.forEach(s => s.classList.remove('active'));
-                
-                // Add active class to clicked link
-                link.classList.add('active');
-                
-                // Show corresponding section
-                const targetId = link.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
-                
-                // Update underline position
-                updateUnderline(link);
+                activateSection(link.dataset.target);
             });
         });
 
-        // Update underline on window resize
-        window.addEventListener('resize', () => {
-            const activeLink = document.querySelector('.nav-link.active');
-            updateUnderline(activeLink);
+        // Swipe / drag between sections — same activateSection call, so the pill wiggle is identical either way
+        const swipeZone = document.querySelector('main');
+        let startX = 0, startY = 0, dragging = false, horizontal = false;
+
+        swipeZone.addEventListener('pointerdown', (e) => {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            startX = e.clientX;
+            startY = e.clientY;
+            dragging = true;
+            horizontal = false;
+        });
+
+        swipeZone.addEventListener('pointermove', (e) => {
+            if (!dragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            if (!horizontal && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+                horizontal = true;
+            }
+            if (horizontal) e.preventDefault();
+        });
+
+        swipeZone.addEventListener('pointerup', (e) => {
+            if (!dragging) return;
+            dragging = false;
+            const dx = e.clientX - startX;
+            if (horizontal && Math.abs(dx) > 60) {
+                const activeTarget = document.querySelector('.nav-link.active').dataset.target;
+                const idx = sectionOrder.indexOf(activeTarget);
+                let nextIdx = idx;
+                if (dx < 0 && idx < sectionOrder.length - 1) nextIdx = idx + 1;
+                if (dx > 0 && idx > 0) nextIdx = idx - 1;
+                if (nextIdx !== idx) activateSection(sectionOrder[nextIdx]);
+            }
+            horizontal = false;
+        });
+
+        swipeZone.addEventListener('pointercancel', () => { dragging = false; horizontal = false; });
+
+        document.querySelectorAll('.glass-interactive').forEach(el => {
+            el.addEventListener('mousemove', (e) => {
+                const r = el.getBoundingClientRect();
+                const x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
+                const y = ((e.clientY - r.top) / r.height * 100).toFixed(1);
+                el.style.setProperty('--mx', x + '%');
+                el.style.setProperty('--my', y + '%');
+            });
         });
     </script>
 </body>
