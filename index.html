@@ -1,450 +1,475 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta name="google-site-verification" content="QYNWQFixS_C9HKGFzIXxbE_xGh-JJRwkmXnmgCSrTAg" />
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sangsidhya Kar</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --ink: #060810;
-            --violet: #6e5bff;
-            --cyan: #4fd8e8;
-            --amber: #ffb37a;
-            --text: #f3f4f8;
-            --muted: #98a1ba;
-            --glass-border: rgba(255,255,255,0.14);
-            --ease-liquid: cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
+<meta name="google-site-verification" content="QYNWQFixS_C9HKGFzIXxbE_xGh-JJRwkmXnmgCSrTAg" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sangsidhya Kar, undergraduate in Statistics at Presidency University. Probability, statistics, learning theory.">
+<title>Sangsidhya Kar</title>
+<script>
+  // Dark by default; remembers a manual switch if storage is available.
+  (function () {
+    var t = "dark";
+    try { t = localStorage.getItem("theme") || "dark"; } catch (e) {}
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script>
+  window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"] } };
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  :root {
+    --bg: #1f2023;
+    --bg-soft: #28292d;
+    --fg: #e5e5e8;
+    --muted: #9b9ca3;
+    --line: #3a3b40;
+    --accent: #8fb0f0;
+    --accent-soft: rgba(143,176,240,0.13);
+    --tag-fg: #d0d3dc;
+    --shadow: 0 1px 0 rgba(255,255,255,0.03) inset;
+  }
+  :root[data-theme="light"] {
+    --bg: #ffffff;
+    --bg-soft: #f5f6f8;
+    --fg: #1d2129;
+    --muted: #5d6676;
+    --line: #dfe2e8;
+    --accent: #1f5fd1;
+    --accent-soft: rgba(31,95,209,0.08);
+    --tag-fg: #2d3a55;
+    --shadow: none;
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  a:focus-visible, button:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-        html { scroll-behavior: smooth; }
+  /* ---------- Navbar ---------- */
+  .navbar {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-inner {
+    max-width: 880px; margin: 0 auto; padding: 0.75rem 1.25rem;
+    display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  }
+  .brand { font-weight: 600; color: var(--fg); letter-spacing: 0.01em; }
+  .brand:hover { text-decoration: none; }
+  .nav-links { display: flex; gap: 1.25rem; list-style: none; margin: 0; padding: 0; }
+  .nav-links a { color: var(--muted); font-size: 0.95rem; padding: 0.2rem 0; border-bottom: 2px solid transparent; }
+  .nav-links a:hover { color: var(--fg); text-decoration: none; }
+  .nav-links a[aria-current="page"] { color: var(--fg); border-bottom-color: var(--accent); }
+  .nav-right { margin-left: auto; display: flex; align-items: center; gap: 0.35rem; }
+  .icon-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; border-radius: 8px;
+    color: var(--muted); background: transparent; border: 0; cursor: pointer;
+  }
+  .icon-btn:hover { color: var(--fg); background: var(--bg-soft); text-decoration: none; }
+  .icon-btn svg { width: 18px; height: 18px; }
+  .cv-pill {
+    font-size: 0.82rem; font-weight: 500; padding: 0.3rem 0.75rem; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--fg); margin-right: 0.2rem;
+  }
+  .cv-pill:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--ink);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+  /* ---------- Layout ---------- */
+  main { max-width: 880px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
+  h1 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 2.3rem; line-height: 1.2; margin: 0 0 1rem; }
+  h2 { font-family: "Source Serif 4", Georgia, serif; font-weight: 600; font-size: 1.55rem; margin: 2.4rem 0 1rem; padding-bottom: 0.35rem; border-bottom: 1px solid var(--line); }
+  h3 { font-size: 1.05rem; font-weight: 600; margin: 1.6rem 0 0.5rem; }
+  hr { border: 0; border-top: 1px solid var(--line); margin: 2.2rem 0; }
+  p { margin: 0 0 1rem; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.88rem; }
 
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.05), transparent 60%),
-                        radial-gradient(ellipse at 50% 100%, rgba(0,0,0,0.6), transparent 70%);
-            pointer-events: none;
-        }
+  /* ---------- Home ---------- */
+  .hero { display: flex; gap: 2.5rem; align-items: flex-start; }
+  .hero-text { flex: 1; min-width: 0; }
+  .portrait { width: 190px; height: 190px; border-radius: 50%; object-fit: cover; flex-shrink: 0; border: 1px solid var(--line); background: var(--bg-soft); }
+  .link-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0 0 0.5rem; }
+  .btn {
+    display: inline-block; padding: 0.35rem 0.85rem; border-radius: 8px; font-size: 0.88rem; font-weight: 500;
+    background: var(--bg-soft); color: var(--fg); border: 1px solid var(--line);
+  }
+  .btn:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+  .edu { margin: 0 0 1.1rem; }
+  .edu .where { color: var(--muted); }
 
-        /* Aurora backdrop — the color field the glass will refract */
-        .aurora { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            opacity: 0.55;
-            mix-blend-mode: screen;
-            will-change: transform;
-        }
-        .b1 {
-            width: 60vmax; height: 60vmax; top: -22%; left: -18%;
-            background: radial-gradient(circle at 30% 30%, var(--violet), transparent 70%);
-            animation: drift1 46s ease-in-out infinite alternate;
-        }
-        .b2 {
-            width: 52vmax; height: 52vmax; bottom: -26%; right: -12%;
-            background: radial-gradient(circle at 60% 40%, var(--cyan), transparent 70%);
-            animation: drift2 58s ease-in-out infinite alternate;
-        }
-        .b3 {
-            width: 46vmax; height: 46vmax; top: 28%; right: 18%;
-            background: radial-gradient(circle at 50% 50%, var(--amber), transparent 70%);
-            animation: drift3 64s ease-in-out infinite alternate;
-        }
-        @keyframes drift1 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(8%,10%) rotate(25deg); } }
-        @keyframes drift2 { from { transform: translate(0,0) rotate(0deg); } to { transform: translate(-10%,-6%) rotate(-20deg); } }
-        @keyframes drift3 { from { transform: translate(0,0) scale(1); } to { transform: translate(-6%,8%) scale(1.15); } }
+  /* ---------- Papers ---------- */
+  .paper { margin: 0 0 1.7rem; padding-left: 2.6rem; position: relative; }
+  .paper .num { position: absolute; left: 0; top: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .paper .title { font-weight: 600; color: var(--fg); }
+  .paper .title a { color: var(--fg); }
+  .paper .title a:hover { color: var(--accent); }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem 0.5rem; margin: 0.3rem 0; font-size: 0.85rem; color: var(--muted); }
+  .tag {
+    display: inline-block; font-size: 0.74rem; padding: 0.05rem 0.55rem; border-radius: 999px;
+    background: var(--accent-soft); color: var(--tag-fg); border: 1px solid transparent; white-space: nowrap;
+  }
+  .tag.year { background: transparent; border-color: var(--line); color: var(--muted); }
+  .tag.link { background: transparent; border-color: var(--line); color: var(--accent); }
+  .tag.link:hover { border-color: var(--accent); text-decoration: none; }
+  .authors { margin: 0.2rem 0; font-size: 0.95rem; }
+  .authors b { font-weight: 600; }
+  .venue { font-size: 0.9rem; color: var(--muted); margin: 0.1rem 0; }
 
-        .noise-overlay {
-            position: fixed; inset: 0; z-index: 5; pointer-events: none; opacity: 0.035; mix-blend-mode: overlay;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        }
+  details.abs { margin-top: 0.45rem; }
+  details.abs summary { cursor: pointer; font-weight: 600; font-size: 0.92rem; list-style: none; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--fg); }
+  details.abs summary::-webkit-details-marker { display: none; }
+  details.abs summary::before { content: "\25B8"; color: var(--muted); transition: transform 0.15s ease; display: inline-block; }
+  details.abs[open] summary::before { transform: rotate(90deg); }
+  details.abs .body { margin-top: 0.5rem; padding: 0.9rem 1.1rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 10px; font-size: 0.94rem; box-shadow: var(--shadow); }
+  details.abs .body p:last-child { margin-bottom: 0; }
 
-        /* ---------- Glass primitive ---------- */
-        .glass {
-            position: relative;
-            isolation: isolate;
-            border-radius: var(--r, 20px);
-            border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.03);
-            box-shadow:
-                inset 0 1px 1px rgba(255,255,255,0.55),
-                inset 0 -1px 14px rgba(255,255,255,0.06),
-                0 24px 48px -20px rgba(0,0,0,0.65);
-        }
-        .glass::before {
-            content: "";
-            position: absolute; inset: 0;
-            border-radius: inherit;
-            backdrop-filter: blur(4px) saturate(160%) brightness(1.05);
-            -webkit-backdrop-filter: blur(4px) saturate(160%) brightness(1.05);
-            filter: url(#glass-distortion);
-            z-index: -1;
-        }
-        .glass-interactive::after {
-            content: "";
-            position: absolute; inset: 0;
-            border-radius: inherit;
-            pointer-events: none;
-            background: radial-gradient(220px circle at var(--mx,50%) var(--my,15%), rgba(255,255,255,0.4), transparent 60%);
-            mix-blend-mode: overlay;
-            opacity: 0.9;
-        }
+  .subhead { text-align: center; color: var(--muted); font-style: italic; margin: 1.6rem 0 1.2rem; }
 
-        a { color: inherit; }
-        a:focus-visible, button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; border-radius: 4px; }
+  /* ---------- Personal ---------- */
+  .entry { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); margin: 0 0 0.7rem; }
+  .entry summary { cursor: pointer; padding: 0.75rem 1rem; list-style: none; display: flex; gap: 0.7rem; align-items: baseline; flex-wrap: wrap; }
+  .entry summary::-webkit-details-marker { display: none; }
+  .entry summary::after { content: "Expand"; margin-left: auto; font-size: 0.78rem; color: var(--muted); }
+  .entry[open] summary::after { content: "Collapse"; }
+  .entry .e-title { font-weight: 600; }
+  .entry .e-date { color: var(--muted); font-size: 0.88rem; }
+  .entry .e-body { padding: 0 1rem 0.9rem; font-size: 0.95rem; }
+  .entry .e-body p:last-child { margin-bottom: 0; }
 
-        /* ---------- Nav ---------- */
-        .site-nav { position: fixed; top: 20px; left: 0; right: 0; display: flex; justify-content: center; z-index: 50; padding: 0 16px; }
-        .nav-inner { --r: 999px; display: flex; align-items: center; padding: 6px; }
-        .nav-links { list-style: none; display: flex; gap: 2px; position: relative; z-index: 2; }
-        .nav-links a {
-            position: relative; z-index: 2; display: block;
-            padding: 0.6rem 1.15rem; border-radius: 999px;
-            color: var(--muted); text-decoration: none;
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem;
-            letter-spacing: 0.05em; text-transform: uppercase;
-            transition: color 0.3s ease;
-        }
-        .nav-links a.active, .nav-links a:hover { color: var(--text); }
-        .nav-pill { --r: 999px; position: absolute; top: 6px; left: 6px; height: calc(100% - 12px); z-index: 1;
-            transition: left 0.5s var(--ease-liquid), width 0.5s var(--ease-liquid); }
+  footer { max-width: 880px; margin: 0 auto; padding: 1.5rem 1.25rem 3rem; color: var(--muted); font-size: 0.85rem; border-top: 1px solid var(--line); }
 
-        /* ---------- Layout ---------- */
-        main { padding: 9rem 0 5rem; min-height: calc(100vh - 200px); position: relative; z-index: 1; touch-action: pan-y; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
-
-        .content-section { display: none; }
-        .content-section.active { display: block; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-
-        .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 0.75rem; }
-        h1 { font-family: 'Fraunces', serif; font-weight: 500; font-size: clamp(2.6rem, 5vw, 4.2rem); line-height: 1.05; letter-spacing: -0.01em; margin-bottom: 1.25rem; }
-        h2 { font-family: 'Fraunces', serif; font-weight: 500; font-style: italic; font-size: clamp(1.9rem, 3.4vw, 2.5rem); margin-bottom: 2rem; }
-
-        /* Home */
-        .home-grid { display: flex; align-items: center; gap: 3.5rem; flex-wrap: wrap; }
-        .portrait-frame { --r: 50%; width: 200px; height: 200px; flex-shrink: 0; padding: 6px; }
-        .portrait { width: 100%; height: 100%; border-radius: 50%; background-size: cover; background-position: center; background-color: rgba(255,255,255,0.04); }
-        .intro { flex: 1; min-width: 280px; }
-        .lede { font-size: 1.1rem; max-width: 56ch; margin-bottom: 0.85rem; }
-        .lede-sub { color: var(--muted); margin-bottom: 1.6rem; }
-        .text-link { color: var(--cyan); text-decoration: none; border-bottom: 1px solid rgba(79,216,232,0.35); transition: border-color 0.3s ease, color 0.3s ease; }
-        .text-link:hover { color: var(--amber); border-color: rgba(255,179,122,0.6); }
-        .chip { --r: 999px; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.4rem;
-            font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; letter-spacing: 0.05em; text-transform: uppercase;
-            text-decoration: none; transition: transform 0.35s var(--ease-liquid); }
-        .chip:hover { transform: translateY(-3px); }
-
-        /* Cards */
-        .card-grid, .paper-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-        .card { --r: 20px; padding: 1.75rem; transition: transform 0.4s var(--ease-liquid); }
-        .card:hover { transform: translateY(-4px); }
-        .tag { display: inline-block; font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase;
-            color: var(--amber); background: rgba(255,179,122,0.12); border: 1px solid rgba(255,179,122,0.3); padding: 0.3rem 0.7rem; border-radius: 999px; margin-bottom: 1rem; }
-        .card h3 { font-family: 'Fraunces', serif; font-size: 1.2rem; font-weight: 500; margin-bottom: 0.6rem; }
-        .card p { color: var(--muted); font-size: 0.94rem; }
-
-        .paper { --r: 22px; padding: 2rem; transition: transform 0.4s var(--ease-liquid); }
-        .paper:hover { transform: translateY(-4px); }
-        .paper h3 { font-family: 'Fraunces', serif; font-style: italic; font-size: 1.35rem; margin: 0.75rem 0 1.1rem; font-weight: 500; }
-        .arrow-link { text-decoration: none; }
-        .arrow-link::after { content: " →"; display: inline-block; transition: margin-left 0.3s var(--ease-liquid); }
-        .arrow-link:hover::after { margin-left: 0.35em; }
-
-        /* Contacts */
-        .note { color: var(--muted); font-style: italic; margin-bottom: 1.6rem; }
-        .contact-grid { --r: 22px; padding: 1.4rem; display: flex; flex-direction: column; gap: 0.2rem; max-width: 480px; }
-        .contact-row { display: flex; align-items: center; gap: 0.9rem; padding: 0.9rem 1rem; border-radius: 14px;
-            text-decoration: none; font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem;
-            transition: background 0.3s ease, transform 0.3s var(--ease-liquid); }
-        .contact-row:hover { background: rgba(255,255,255,0.06); transform: translateX(4px); }
-        .contact-row .icon { width: 19px; height: 19px; color: var(--cyan); flex-shrink: 0; }
-        .contact-row .icon svg { width: 100%; height: 100%; }
-
-        @media (max-width: 768px) {
-            .home-grid { flex-direction: column; text-align: center; }
-            .nav-links a { padding: 0.55rem 0.8rem; font-size: 0.7rem; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            .blob { animation: none !important; }
-            html { scroll-behavior: auto; }
-        }
-    </style>
+  @media (max-width: 680px) {
+    .hero { flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; }
+    .portrait { width: 150px; height: 150px; }
+    h1 { font-size: 1.9rem; }
+    .paper { padding-left: 2.2rem; }
+    .nav-inner { gap: 0.8rem; }
+  }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+</style>
 </head>
 <body>
 
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <defs>
-            <filter id="glass-distortion" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
-                <feTurbulence type="fractalNoise" baseFrequency="0.008 0.012" numOctaves="2" seed="7" result="noise"/>
-                <feGaussianBlur in="noise" stdDeviation="3" result="blurred"/>
-
-                <!-- Each wavelength refracts at a slightly different rate (dispersion) — blue bends most, red least -->
-                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="31" xChannelSelector="R" yChannelSelector="G" result="dispR"/>
-                <feColorMatrix in="dispR" type="matrix"
-                    values="1 0 0 0 0
-                            0 0 0 0 0
-                            0 0 0 0 0
-                            0 0 0 1 0" result="red"/>
-
-                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="35" xChannelSelector="R" yChannelSelector="G" result="dispG"/>
-                <feColorMatrix in="dispG" type="matrix"
-                    values="0 0 0 0 0
-                            0 1 0 0 0
-                            0 0 0 0 0
-                            0 0 0 1 0" result="green"/>
-
-                <feDisplacementMap in="SourceGraphic" in2="blurred" scale="40" xChannelSelector="R" yChannelSelector="G" result="dispB"/>
-                <feColorMatrix in="dispB" type="matrix"
-                    values="0 0 0 0 0
-                            0 0 0 0 0
-                            0 0 1 0 0
-                            0 0 0 1 0" result="blue"/>
-
-                <feBlend in="red" in2="green" mode="screen" result="rg"/>
-                <feBlend in="rg" in2="blue" mode="screen"/>
-            </filter>
-        </defs>
-    </svg>
-
-    <div class="aurora" aria-hidden="true">
-        <span class="blob b1"></span>
-        <span class="blob b2"></span>
-        <span class="blob b3"></span>
+<header class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="#home">Sangsidhya Kar</a>
+    <ul class="nav-links">
+      <li><a href="#home" data-page="home">Home</a></li>
+      <li><a href="#research" data-page="research">Research</a></li>
+      <li><a href="#personal" data-page="personal">Personal</a></li>
+    </ul>
+    <div class="nav-right">
+      <a class="cv-pill" href="cvSangsidhya.pdf" target="_blank" rel="noopener">CV</a>
+      <a class="icon-btn" href="https://www.linkedin.com/in/sangsidhya-kar-55375020a/" aria-label="LinkedIn" title="LinkedIn">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9.75h4v11.5H3V9.75zm6.5 0h3.83v1.57h.05c.53-1 1.84-2.07 3.79-2.07 4.05 0 4.8 2.67 4.8 6.13v5.87h-4v-5.2c0-1.24-.02-2.84-1.73-2.84-1.73 0-2 1.35-2 2.75v5.29h-4V9.75z"/></svg>
+      </a>
+      <a class="icon-btn" href="https://github.com/Sangsidhya" aria-label="GitHub" title="GitHub">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a class="icon-btn" href="mailto:sangsidhyakar@gmail.com" aria-label="Email" title="Email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+      </a>
+      <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.5 8.5 0 1111.2 3a6.8 6.8 0 009.8 9.8z"/></svg>
+      </button>
     </div>
-    <div class="noise-overlay" aria-hidden="true"></div>
+  </div>
+</header>
 
-    <nav class="site-nav">
-        <div class="nav-inner glass" id="navInner">
-            <span class="nav-pill glass" id="navPill" aria-hidden="true"></span>
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home" class="nav-link active" data-target="home">Home</a></li>
-                <li><a href="#activities" class="nav-link" data-target="activities">Activities</a></li>
-                <li><a href="#work" class="nav-link" data-target="work">Work</a></li>
-                <li><a href="#contacts" class="nav-link" data-target="contacts">Contacts</a></li>
-            </ul>
-        </div>
-    </nav>
+<main>
 
-    <main>
-        <div class="container">
+  <!-- ===================== HOME ===================== -->
+  <section id="home">
+    
 
-            <section id="home" class="content-section active">
-                <div class="home-grid">
-                    <div class="portrait-frame glass glass-interactive">
-                        <div class="portrait" style="background-image: url('filepic.jpg');"></div>
-                    </div>
-                    <div class="intro">
-                        
-                        <h1>Sangsidhya Kar</h1>
-                        <p class="lede">I'm an undergraduate majoring in <a href="https://www.presiuniv.ac.in/web/statistics.php" class="text-link">Statistics at Presidency University</a>, primarily interested in probability and its applications. I like to code — mostly in Java and Python — and outside of academics I play chess, read non-fiction, and play the piano.</p>
-                        <p class="lede-sub">Explore my work and activities below, or find your way to get in touch.</p>
-                        <a href="https://drive.google.com/file/d/1EGxHlLBTnZgiIgJ9zfsgRrZfdejELrEW/view?usp=sharing" class="chip glass glass-interactive">View CV</a>
-                    </div>
-                </div>
-            </section>
+    <h2>About</h2>
+    <div class="hero">
+      <div class="hero-text">
+        <p>I am an undergraduate in <b>Statistics at <a href="https://www.presiuniv.ac.in/web/statistics.php">Presidency University</a></b>, Kolkata.</p>
 
-            <section id="activities" class="content-section">
-                <p class="eyebrow">Record</p>
-                <h2>Activities &amp; Accolades</h2>
-                <div class="card-grid">
-                    <article class="card glass glass-interactive">
-                        <span class="tag">2024</span>
-                        <h3>MTRP Awardee</h3>
-                        <p>Selected for the MTRP'24 camp, conducted by students of the Indian Statistical Institute, Kolkata.</p>
-                    </article>
-                    <article class="card glass glass-interactive">
-                        <span class="tag">2025</span>
-                        <h3>LIMIT Awardee</h3>
-                        <p>Selected for the LIMIT'25 camp, conducted by students of the Indian Statistical Institute, Bangalore.</p>
-                    </article>
-                    <article class="card glass glass-interactive">
-                        <span class="tag">Rank 24 · East Zone</span>
-                        <h3>Madhava Awardee</h3>
-                        <p>Placed 24th in the Madhava Mathematics Competition (East Zone) and attended the camp from 22–26 June 2026.</p>
-                    </article>
-                    <article class="card glass glass-interactive">
-                        <span class="tag">Rank 3</span>
-                        <h3>IISc Enumeration</h3>
-                        <p>Placed third in Enumeration, the mathematics competition organised by IISc's Pravega.</p>
-                    </article>
-                    <article class="card glass glass-interactive">
-                        <span class="tag">Rank 3</span>
-                        <h3>15th Statistics Olympiad</h3>
-                        <p>Placed third in the 15th Statistics Olympiad, conducted by AIMSCS.</p>
-                    </article>
-                    <article class="card glass glass-interactive">
-                        <span class="tag">2025 Batch</span>
-                        <h3>Passed ISC</h3>
-                        <p>Highest score: 99/100 in English. Lowest score: 90/100 in Physics.</p>
-                    </article>
-                </div>
-            </section>
+<p>I am primarily interested in <b>mathematical statistics and its applications</b>, particularly statistical inference, optimal transport, and learning theory.</p>
 
-            <section id="work" class="content-section">
-                <p class="eyebrow">Research</p>
-                <h2>Work &amp; Projects</h2>
-                <div class="paper-grid">
-                    <article class="paper glass glass-interactive">
-                        <span class="tag">Paper</span>
-                        <h3>Global Games With Heavy-Tailed Distributions</h3>
-                        <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6296258" class="text-link arrow-link">Read the paper</a>
-                    </article>
-                     <article class="paper glass glass-interactive">
-                        <span class="tag">Paper</span>
-                        <h3>A Dynamic Central Limit Theorem for Mean-Field Quantum Filtering
-</h3>
-                        <a href="https://arxiv.org/abs/2609.13346v1" class="text-link arrow-link">Read the paper</a>
-                    </article>
-                     <article class="paper glass glass-interactive">
-                        <span class="tag">Paper</span>
-                        <h3>Why Adaptive Optimizers Underestimate Rare Tokens </h3>
-                        <a href="https://arxiv.org/abs/2609.37535" class="text-link arrow-link">Read the paper</a>
-                    </article>
-                    <article class="paper glass glass-interactive">
-                        <span class="tag">Notes</span>
-                        <h3>On Operator Algebras and Quantum Theory</h3>
-                        <a href="https://drive.google.com/file/d/1H_u-EIeUBRmMPdYXltZn-7pWeMPk-jI1/view?usp=sharing" class="text-link arrow-link">Read the paper</a>
-                    </article>
-                </div>
-            </section>
+<p>I like to code, mostly in Java and Python. Outside of academics, I play chess, play the piano, and I really like learning more about history, especially Indian history!</p>
 
-            <section id="contacts" class="content-section">
-                <p class="eyebrow">Reach</p>
-                <h2>Get in Touch</h2>
-                <p class="note">These are my only legitimate modes of communication.</p>
-                <div class="contact-grid glass glass-interactive">
-                    <a href="mailto:sangsidhyakar@gmail.com" class="contact-row">
-                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-                        sangsidhyakar@gmail.com
-                    </a>
-                    <a href="https://github.com/Sangsidhya" class="contact-row">
-                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6L3 12l5 6M16 6l5 6-5 6"/></svg></span>
-                        GitHub — Sangsidhya
-                    </a>
-                    <a href="https://www.linkedin.com/in/sangsidhya-kar-55375020a/" class="contact-row">
-                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg></span>
-                        LinkedIn Profile
-                    </a>
-                    <a href="https://www.youtube.com/@sangsidhyakar" class="contact-row">
-                        <span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="4"/><path d="M10 9l6 3-6 3V9z" fill="currentColor" stroke="none"/></svg></span>
-                        YouTube — @sangsidhyakar
-                    </a>
-                </div>
-            </section>
+        <h3>Education</h3>
+        <p class="edu">
+          <b>B.Sc. (Honours with Research) in Statistics</b> | Expected 2029<br>
+          <span class="where"><a href="https://www.presiuniv.ac.in/web/statistics.php">Presidency University</a> | Kolkata, WB</span>
+        </p>
+        <p class="edu">
+          <b>Indian School Certificate (Class 12)</b>, 94.25% | 2025<br>
+          <span class="where"><a href="https://smods.in/">St. Mary's Orphanage and Day School</a> | Kolkata, WB</span>
+        </p>
+      </div>
+      <img class="portrait" src="filepic.jpg" alt="Portrait of Sangsidhya Kar">
+    </div>
 
-        </div>
-    </main>
+    
+  </section>
 
-    <script>
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('.content-section');
-        const pill = document.getElementById('navPill');
-        const navInner = document.getElementById('navInner');
+  <!-- ===================== RESEARCH ===================== -->
+  <section id="research">
+    <h1>Research</h1>
 
-        function movePill(link) {
-            const linkRect = link.getBoundingClientRect();
-            const navRect = navInner.getBoundingClientRect();
-            pill.style.width = linkRect.width + 'px';
-            pill.style.left = (linkRect.left - navRect.left) + 'px';
-        }
+    <!-- ---------- Under review ---------- -->
+    <h2>Working Papers</h2>
 
-        function initPill() {
-            const active = document.querySelector('.nav-link.active');
-            if (active) movePill(active);
-        }
+    <article class="paper">
+      <span class="num">[5]</span>
+      <div class="title">Causal Structure Meets Stackelberg Games: Exploiting Known Causal Graphs for Efficient Equilibrium Learning</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">causal inference</span><span class="tag">game theory</span></div>
+            <div class="authors"><b>S. Kar</b>, B. Chang, J. Loi, W. Chang, A. Parafita</div>
 
-        window.addEventListener('load', initPill);
-        window.addEventListener('resize', initPill);
-        requestAnimationFrame(() => requestAnimationFrame(initPill));
+      <div class="venue">Under review</div>
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        We study a two-player Stackelberg game in which both players intervene on variables in a shared causal DAG. Each player's reward is generated by an unknown node of their subgraph, and identifying this node reduces their action space from \(\Theta(nK)\) interventions to \(K\). While the single-agent problem admits an \(O(\log n)\) binary search using a fixed do-nothing baseline, this baseline becomes endogenous in the game because it depends on the opponent's actions.
+      </p><p>
+        We propose a concurrent identification protocol that preserves the validity of these tests without coordination. Both players explore uniformly and bucket observations by joint action, ensuring that ancestor tests are performed with the opponent's action fixed. When one player identifies its reward node, it continues uniform exploration over the reduced action set rather than committing to a best response, shrinking the effective opponent action space for the remaining search. We derive a Stackelberg regret bound of \(t_0+\tilde{O}(\sqrt{KT})\), where \(t_0\) is independent of the horizon \(T\), so the leading term depends on \(K\) rather than the causal graph size.
+      </p><p>
+        Simulations closely match the predicted identification rates and transition savings. However, the identification cost scales as \(n_l n_f K^2\gamma_{\mathrm{id}}^{-2}\), making the protocol impractical on the instances studied; reducing this dependence is the main challenge for practical use.
+      </p></div></details>
+    </article>
 
-        const sectionOrder = ['home', 'activities', 'work', 'contacts'];
+    <article class="paper">
+      <span class="num">[4]</span>
+      <div class="title">A Functional Scaling Law for One-Pass SGD with Feature Learning</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">scaling laws</span></div>
+      <div class="authors"><b>S. Kar</b>, M. Sangal, W. Chang, D. Kim, B. Li</div>
+      <div class="venue">Under review</div>
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        The Functional Scaling Law (FSL) of Li et al. (2026) characterises the expected-loss trajectory of one-pass SGD under arbitrary learning-rate schedules when features are frozen at initialisation. In contrast, Bordelon et al. (2025) show that feature learning improves the loss exponent from \(t^{-s}\) to \(t^{-2s/(1+s)}\) for hard tasks (\(s<1\)), but provide only leading-order asymptotics for constant learning rates and noiseless targets. We extend the FSL to feature learning by showing that, under a dynamical mean-field theory (DMFT) closure assumption, the loss retains the lazy FSL's functional form under the effective-time transformation
+      </p><p>
+        \[ \tilde t \asymp t+\gamma^{1/(1+s)}\,t^{2-\chi}, \qquad \chi = s\max\{1,\,2/(1+s)\}, \]
+      </p><p>
+        with the noise-rate schedule transformed to \(\tilde\rho=\rho\,dt/d\tilde t\). Here \(\gamma>0\) is the feature-learning rate, and \(\chi=2s/(1+s)\) for \(s<1\). For gradient flow from a balanced initialisation, we derive the clock from an exact conservation law of the two-layer dynamics. The resulting square-root dependence of the clock rate on the norm of the learned function determines the \(\gamma^{1/(1+s)}\) scaling and yields the loss prefactor \(\gamma^{-s/(1+s)}\), in contrast to \(\gamma^{-s}\) in Bordelon et al. (2025). The law recovers the lazy FSL as \(\gamma\to 0\) and the feature-learning exponent in the gradient-flow limit, while also characterising schedule-dependent SGD transients. At constant learning rate, feature learning amplifies the effective noise rate, causing the SGD noise contribution to grow rather than saturate. Simulations also show that large label noise slows the effective clock. We derive the expected clock drift under noise and propose a heuristic closure that captures its turnover and the continued loss reduction beyond the plateau predicted by the noise-free clock.
+      </p><p>
+        Our proof follows the seven-step argument of Li et al. (2026). All steps extend unconditionally except the reduction of the residual SDE to a scalar Volterra equation, which requires the stated DMFT closure. In gradient flow from an aligned balanced initialisation, we establish the law without this assumption by bounding the effect of the rank-one correction from the conservation law. Simulations validate the predictions in the solvable model and show effective-time collapse in a tanh MLP and a small transformer language model. In the solvable model, the schedule optimised using the feature-learning law improves on cosine by 15% at \(\gamma=1\), whereas the schedule optimised using the lazy law incurs a loss 37% higher than that choice.
+      </p></div></details>
+    </article>
 
-        function activateSection(target) {
-            const link = document.querySelector(`.nav-link[data-target="${target}"]`);
-            if (!link) return;
-            navLinks.forEach(l => l.classList.remove('active'));
-            sections.forEach(s => s.classList.remove('active'));
-            link.classList.add('active');
-            document.getElementById(target).classList.add('active');
-            movePill(link);
-        }
+    <article class="paper">
+      <span class="num">[3]</span>
+      <div class="title">When Known Objects Hide Unknowns: Sparse-Contamination Theory for CLIP-Based OOD Detection</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">statistics</span><span class="tag">machine learning</span><span class="tag">OOD detection</span><span>Under review</span></div>
+      <div class="authors">D. Liu, <b>S. Kar</b>, R. Piao, M. Burenko, W. Chang</div>
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        Existing CLIP-based out-of-distribution (OOD) detectors generally formulate novelty as a global image-level distributional shift: an image is either entirely ID or entirely OOD. This formulation does not explicitly distinguish images in which an unknown object co-occurs with recognizable in-distribution (ID) content. Under a normalized linear pooling model, we derive a lower bound on the global MCM score and give sufficient conditions under which an image containing unknown content is nevertheless accepted as ID (masking theorem). These conditions depend on the unknown region's pooling mass, the patch margins, the pooled feature norm, and the detector's acceptance threshold. We formulate mixed-image OOD detection as structured sparse hypothesis testing over local CLIP patch features and derive finite-sample sufficient detection conditions for global sum, patch maximum, penalized adaptive top-\(k\), and spatial scan tests under independent sub-Gaussian noise. Exact Gaussian power formulas clarify the dependence of the sum and maximum on contamination size.
+      </p><p>
+        For independent Gaussian noise, we prove a lower bound using disjoint candidate regions that matches the scan upper bound in rate when the logarithms of the packing size and search-family size are comparable, and a truncated second-moment argument shows that the detection constant \(\delta\sqrt{k}=\sqrt{2\log J}\) is sharp for the fixed-size scan when the two logarithms are asymptotically equal. We also give a distribution-free finite-sample guarantee for a clipped scan that requires no moment conditions on the background noise. These results motivate our development of an adaptive post-hoc detector, SpatialPMIScan, that requires no retraining, no bounding-box annotations, and no additional models beyond a frozen CLIP encoder, while providing finite-sample false-positive control through split conformal calibration.
+      </p><p>
+        Through Monte Carlo experiments, we examine the predicted dependence of detection power on object size and signal strength and identify background tails, support geometry, and evidence dispersion as additional determinants of aggregation performance. We show that clipping patch scores substantially improves scan power under skewed and heavy-tailed backgrounds while retaining strong Gaussian performance. In image-level evaluations, we measure weak local evidence for small pasted unknown regions and find that the global MCM and GL-MCM scores lead spatial scanning across the VOC area strata.
+      </p></div></details>
+    </article>
 
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                activateSection(link.dataset.target);
-            });
-        });
+    
 
-        // Swipe / drag between sections — same activateSection call, so the pill wiggle is identical either way
-        const swipeZone = document.querySelector('main');
-        let startX = 0, startY = 0, dragging = false, horizontal = false;
+    <article class="paper">
+      <span class="num">[1]</span>
+      <div class="title">Proof Fragility Prediction: Step-Level Failure Localization for Efficient Neural Theorem Proving</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">machine learning</span><span class="tag">theorem proving</span><span>Under review</span></div>
+      <div class="authors">Z. Li, R. Sankhyan, <b>S. Kar</b>, W. Chang</div>
+    </article>
 
-        swipeZone.addEventListener('pointerdown', (e) => {
-            if (e.pointerType === 'mouse' && e.button !== 0) return;
-            startX = e.clientX;
-            startY = e.clientY;
-            dragging = true;
-            horizontal = false;
-        });
+    <hr>
 
-        swipeZone.addEventListener('pointermove', (e) => {
-            if (!dragging) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            if (!horizontal && Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 1.5) {
-                horizontal = true;
-            }
-            if (horizontal) e.preventDefault();
-        });
+    <!-- ---------- Preprints ---------- -->
+    <h2>Preprints</h2>
 
-        swipeZone.addEventListener('pointerup', (e) => {
-            if (!dragging) return;
-            dragging = false;
-            const dx = e.clientX - startX;
-            if (horizontal && Math.abs(dx) > 60) {
-                const activeTarget = document.querySelector('.nav-link.active').dataset.target;
-                const idx = sectionOrder.indexOf(activeTarget);
-                let nextIdx = idx;
-                if (dx < 0 && idx < sectionOrder.length - 1) nextIdx = idx + 1;
-                if (dx > 0 && idx > 0) nextIdx = idx - 1;
-                if (nextIdx !== idx) activateSection(sectionOrder[nextIdx]);
-            }
-            horizontal = false;
-        });
+    <article class="paper">
+      <span class="num">[4]</span>
+      <div class="title"><a href="https://ssrn.com/abstract=7620318">Honest Finite-sample Inference for Wasserstein Distances in General Dimension</a></div>
+      <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://ssrn.com/abstract=7620318">SSRN</a><span class="tag">statistics</span><span class="tag">optimal transport</span></div>
+      <div class="authors"><b>Sangsidhya Kar</b></div>
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        We study confidence intervals and tests for the Wasserstein distance \(W_p(P,Q)\) between two distributions on \(\mathbb{R}^d\), \(d\ge 2\), observed through independent samples, under a non-asymptotic, uniform-coverage (honest) criterion. Three groups of results are obtained.
+      </p><p>
+        <b>First, certified inference.</b> Kantorovich duality on a held-out sample gives a lower confidence bound for \(W_1\) with finite-sample coverage for every pair of Borel probability measures, in every dimension, without moment, support or smoothness assumptions. A single pointwise inequality, that the empirical cost dominates the empirical mean of the population dual potential, gives upper confidence bounds under a known support bound or under a \(q\)-th moment bound alone.
+      </p><p>
+        <b>Second, sharp limits</b> for the distance as a functional of two unknown distributions. Without any a priori control every honest upper bound is infinite with probability at least \(1-\alpha\). Under moment conditions alone the sharp one-sided rate is \(M^{1/q}\{n^{-1/d}\vee n^{-(q-1)/q}\}\). Over all measures on a bounded set, and over Sobolev classes of order \(s\), each side of any honest interval must pay \((n\log n)^{-1/d}\) and \(n^{-(s+1)/(2s+d)}\) respectively, up to logarithms, which the primal-dual and smoothed primal-dual intervals attain. At \(P=Q\) the sharp excess of honest upper bounds is \(n^{-2/d}\vee n^{-1/2}\) over bounded densities and \(n^{-2(1+s)/(4s+d)}\vee n^{-1/2}\) over Sobolev ellipsoids, the latter being a local rate at every pair whose transport plan leaves an open region untouched.
+      </p><p>
+        <b>Third, adaptation.</b> The lower side admits parametric excess at any fixed pair, so its uniform \(n^{-1/d}\) excess is a price of not knowing the dual potential, and this price vanishes under semi-discrete structure or smoothness of the potential.
+      </p></div></details>
+    </article>
 
-        swipeZone.addEventListener('pointercancel', () => { dragging = false; horizontal = false; });
+    <article class="paper">
+      <span class="num">[3]</span>
+      <div class="title"><a href="https://arxiv.org/abs/2609.37535">Why Adaptive Optimizers Underestimate Rare Tokens</a></div>
+      <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://arxiv.org/abs/2609.37535">arXiv</a><span class="tag">learning theory</span><span class="tag">optimization</span></div>
+      <div class="authors"><b>Sangsidhya Kar</b></div>
+<details class="abs">
+  <summary>Abstract</summary>
+  <div class="body">
+    <p>
+      In the softmax output layer, a rare token receives a small positive logit gradient on most steps and a much larger negative gradient on the few steps when it is the target. SGD simply adds these contributions. Coordinate-wise adaptive methods such as Adam, RMSProp, and sign descent instead divide each update by a running estimate of its magnitude, and that estimate is largest immediately after the token appears. This imbalance has two effects.
+    </p>
+    <p>
+      <b>First, preservation of the mean output embedding.</b> At the level of the whole output layer, we characterize which optimizers preserve the mean output embedding: every method whose update is linear in past gradients does, as do Kronecker-factored and orthogonalized methods such as Shampoo and Muon. Adam, Adafactor, Lion, and sign descent do not, and for these methods we obtain an exact step-by-step expression for the change.
+    </p>
+    <p>
+      <b>Second, bias in rare-token probabilities.</b> At the level of an individual rare token, the same normalization shifts the training fixed point. In the unigram model, sign descent lowers the logit of every token that occurs in fewer than half of the minibatches at a constant expected rate. For RMSProp with periodic arrivals, we can solve the fixed point in closed form: if a token is absent for at least two consecutive minibatches, its equilibrium probability is strictly below its data frequency for every learning rate, and the ratio tends to \(\kappa/(2(e^{\kappa/2}-1))\). Here \(\kappa\) is the mean number of steps between occurrences divided by the second-moment time constant \(1/(1-\beta_2)\). In the same model, SGD and AMSGrad retain the unbiased fixed point.
+    </p>
+    <p>
+      <b>Third, empirical validation.</b> We test these predictions both in a unigram model and in a small language model trained from a known generating distribution. With random arrivals, the bias is larger than the periodic formula predicts; in the language model, the optimizers with the biased fixed point also fit the generating distribution less well.
+    </p>
+  </div>
+</details>
+</article>
+    </article>
 
-        document.querySelectorAll('.glass-interactive').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
-                const r = el.getBoundingClientRect();
-                const x = ((e.clientX - r.left) / r.width * 100).toFixed(1);
-                const y = ((e.clientY - r.top) / r.height * 100).toFixed(1);
-                el.style.setProperty('--mx', x + '%');
-                el.style.setProperty('--my', y + '%');
-            });
-        });
-    </script>
+    <article class="paper">
+      <span class="num">[2]</span>
+      <div class="title"><a href="https://arxiv.org/abs/2609.13346">A Dynamic Central Limit Theorem for Mean-Field Quantum Filtering</a></div>
+      <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://arxiv.org/abs/2609.13346">arXiv</a><span class="tag">probability</span><span class="tag">quantum filtering</span></div>
+      <div class="authors"><b>Sangsidhya Kar</b>, Vassili N. Kolokoltsov</div>
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        We study Open Problem 3 of Kolokoltsov's survey <i>Quantum filtering and propagation of chaos for open quantum systems</i> (2026) on \(\mathscr{H}=\mathbb{C}^{d}\) (\(2\le d<\infty\) fixed): a dynamic central limit theorem for \(N\) mean-field coupled quantum particles under continuous diffusive (homodyne) measurement. The tagged conditional state \(\Gamma^{(1)}_{t}\) is compared with the one-particle filter \(\gamma_{t}\) driven by its own innovation, the mean-field Hamiltonian evaluated at the deterministic Hartree-Lindblad mean \(\eta_{t}\).
+      </p><p>
+        The fluctuation \(F^{N}_{t}=\sqrt{N}\,(\Gamma^{(1)}_{t}-\gamma_{t})\) is not autonomous in the limit: it is driven through the linearised filter by its own innovation, by an idiosyncratic Gaussian martingale carried by the connected correlations with the other particles, and by the empirical field \(\widehat{G}^{N}_{t}=\sqrt{N}\,(\overline{\Gamma}_{t}-\eta_{t})\), which itself satisfies an autonomous linear Gaussian equation, so that \((F,\widehat{G})\) solves a closed system. Unconditionally, \((F^{N},\widehat{G}^{N})\) is tight, every limit point solves this system driven by a Brownian motion orthogonal to a square-integrable martingale pair, and the mean covariance of the idiosyncratic martingale is identified as the limit of the rescaled pair correlations.
+      </p><p>
+        The remaining clauses, concerning signs rather than amplitudes, reduce to a single decorrelation statement fixing the law of the driving pair. It survives in a conditional form, with the common response to the empirical field and the tagged-slot component projected out; without those projections it is false for generic data, which is what fixes them. The conditional form is proved at leading order on a shrinking horizon and from below at its exact orders on every horizon; it is needed only for the concentration of the driving covariances, the Gaussianity of the pair, and uniqueness, and what remains open is one-sided and above the leading order.
+      </p></div></details>
+    </article>
+
+    <article class="paper">
+      <span class="num">[1]</span>
+      <div class="title"><a href="https://ssrn.com/abstract=6296258">Heavy-tailed private information in global games</a></div>
+      <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://ssrn.com/abstract=6296258">SSRN</a><span class="tag">economic theory</span><span class="tag">heavy tails</span></div>
+      <div class="authors"><b>Sangsidhya Kar</b></div>
+      
+      <details class="abs"><summary>Abstract</summary><div class="body"><p>
+        The standard global-games argument has three components: sufficiently extreme private signals create dominance regions, best responses to cutoff strategies are themselves cutoffs, and diffuse public information selects the Laplacian cutoff. We study how these components depend on the distribution of private noise. Tweedie's formula links dominance to the posterior mean: dominance regions exist for every public precision exactly when the posterior mean can leave the unit interval. Cutoff best responses for all parameters are equivalent to log-concavity of the private-noise density.
+      </p><p>
+        For heavy-tailed noise with a polynomially bounded shift ratio, including generalized Pareto and Student-<i>t</i> families, both properties can fail. Extreme private signals are increasingly attributed to noise, and the posterior reverts to the public prior. When the public signal is sufficiently informative, both constant profiles are equilibria and every strategy is rationalizable. Under the same tail condition, cutoff equilibria are confined to the symmetric public signal, while a non-constant equilibrium with aggregate investment close to the complete-information mixed level exists for sufficiently informative public signals.
+      </p><p>
+        The diffuse-information limit is different: for symmetric noise, rationalizable strategies converge on compact sets to the Laplacian cutoff without a moment condition. Without symmetry, a finite mean is needed for this conclusion. For log-concave noise, diffuse public information also gives uniqueness once the public signal is sufficiently diffuse. Thus the usual selection argument separates into distinct properties of private information. A Gaussian approximation of a heavy-tailed posterior can therefore predict a unique cutoff equilibrium in parameter regions where the underlying game has complete-information-type multiplicity.
+      </p></div></details>
+    </article>
+
+    <hr>
+
+    <!-- ---------- Notes and writing ---------- -->
+    <h2>Notes &amp; Writing</h2>
+
+    <article class="paper">
+      <span class="num">[2]</span>
+      <div class="title"><a href="https://drive.google.com/file/d/1H_u-EIeUBRmMPdYXltZn-7pWeMPk-jI1/view?usp=sharing">On Operator Algebras and Quantum Theory</a></div>
+      <div class="meta"><span class="tag">notes</span><span class="tag">operator algebras</span></div>
+    </article>
+    <article class="paper">
+      <span class="num">[1]</span>
+      <div class="title">The Topography of Silent Thoughts</div>
+      <div class="meta"><span class="tag">essay</span></div>
+      <div class="venue">Published in <i>Elements</i>.</div>
+    </article>
+  </section>
+
+  <!-- ===================== PERSONAL ===================== -->
+  <section id="personal">
+    <h1>Personal</h1>
+
+    <h2>Activities &amp; Accolades</h2>
+
+    <details class="entry">
+      <summary><span class="e-title">Madhava Mathematics Competition, Rank 24 (East Zone)</span><span class="e-date">2026</span></summary>
+      <div class="e-body"><p>Placed 24th in the East Zone and attended the Madhava camp from 22 to 26 June 2026.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">ISI LIMIT Camp</span><span class="e-date">2025</span></summary>
+      <div class="e-body"><p>Selected for the LIMIT'25 camp, conducted by students of the Indian Statistical Institute, Bangalore.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">IISc Enumeration, Rank 3</span><span class="e-date">2025</span></summary>
+      <div class="e-body"><p>Placed third in Enumeration, the mathematics competition organised by IISc's Pravega.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">Indian School Certificate</span><span class="e-date">2025</span></summary>
+      <div class="e-body"><p>Scored 94.25% overall. Highest score: 99/100 in English. Lowest score: 90/100 in Physics.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">ISI MTRP Camp</span><span class="e-date">2024</span></summary>
+      <div class="e-body"><p>Selected for the MTRP'24 camp, conducted by students of the Indian Statistical Institute, Kolkata.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">15th Statistics Olympiad, Rank 3</span><span class="e-date">2025</span></summary>
+      <div class="e-body"><p>Placed third in the 15th Statistics Olympiad, conducted by AIMSCS.</p></div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">Competitive swimming</span><span class="e-date">2013 to 2023</span></summary>
+      <div class="e-body"><p>Active member of a local swimming club, with multiple accolades in competitive swimming.</p></div>
+    </details>
+
+    <hr>
+
+    <h2>Misc.</h2>
+
+    <details class="entry">
+      <summary><span class="e-title">Software projects</span></summary>
+      <div class="e-body">
+        <p>I have built several productivity applications: a Pomodoro timer, a thermodynamic system modeling app, a task management system, a PDF reader with advanced features, and an academic grade tracker. Most can be found in my <a href="https://github.com/Sangsidhya/Sangsidhya.github.io">GitHub repository</a>.</p>
+      </div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">Piano, chess, and reading</span></summary>
+      <div class="e-body">
+        <p>I play the piano and chess, and I read mostly non-fiction.</p>
+      </div>
+    </details>
+    <details class="entry">
+      <summary><span class="e-title">YouTube</span></summary>
+      <div class="e-body">
+        <p>My channel is <a href="https://www.youtube.com/@sangsidhyakar">@sangsidhyakar</a>.</p>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<footer>&copy; 2026 Sangsidhya Kar</footer>
+
+<script>
+  // ---- Page switching (hash routing keeps the back button working) ----
+  var pages = ["home", "research", "personal"];
+  function show() {
+    var h = (location.hash || "#home").slice(1);
+    if (pages.indexOf(h) === -1) h = "home";
+    pages.forEach(function (p) {
+      document.getElementById(p).hidden = (p !== h);
+    });
+    document.querySelectorAll(".nav-links a").forEach(function (a) {
+      if (a.dataset.page === h) a.setAttribute("aria-current", "page");
+      else a.removeAttribute("aria-current");
+    });
+    window.scrollTo(0, 0);
+    if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetPromise(); }
+  }
+  window.addEventListener("hashchange", show);
+  show();
+
+  // ---- Theme toggle ----
+  document.getElementById("themeToggle").addEventListener("click", function () {
+    var cur = document.documentElement.getAttribute("data-theme");
+    var next = cur === "dark" ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (e) {}
+  });
+</script>
 </body>
 </html>
