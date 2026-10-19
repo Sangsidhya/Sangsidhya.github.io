@@ -117,6 +117,7 @@
 
   /* ---------- Papers ---------- */
   .paper { margin: 0 0 1.7rem; padding-left: 2.6rem; position: relative; }
+  .paper.plain { padding-left: 0; margin-bottom: 1.2rem; }
   .paper .num { position: absolute; left: 0; top: 0; color: var(--muted); font-variant-numeric: tabular-nums; }
   .paper .title { font-weight: 600; color: var(--fg); }
   .paper .title a { color: var(--fg); }
@@ -132,6 +133,7 @@
   .authors { margin: 0.2rem 0; font-size: 0.95rem; }
   .authors b { font-weight: 600; }
   .venue { font-size: 0.9rem; color: var(--muted); margin: 0.1rem 0; }
+  .status { font-size: 0.85rem; color: var(--muted); }
 
   details.abs { margin-top: 0.45rem; }
   details.abs summary { cursor: pointer; font-weight: 600; font-size: 0.92rem; list-style: none; display: inline-flex; align-items: center; gap: 0.4rem; color: var(--fg); }
@@ -142,6 +144,32 @@
   details.abs .body p:last-child { margin-bottom: 0; }
 
   .subhead { text-align: center; color: var(--muted); font-style: italic; margin: 1.6rem 0 1.2rem; }
+
+  /* ---------- Info popover ---------- */
+  :root { --info: #7ad9a6; }
+  :root[data-theme="light"] { --info: #178a55; }
+  .info-wrap { position: relative; display: inline-block; margin-left: 0.45rem; vertical-align: middle; }
+  .info-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; padding: 0; background: none; border: 0; border-radius: 50%;
+    color: var(--info); cursor: pointer;
+  }
+  .info-btn svg { width: 22px; height: 22px; }
+  .info-btn:hover { background: var(--accent-soft); }
+  .info-pop {
+    display: none; position: absolute; left: 0; top: 100%; z-index: 30;
+    width: min(460px, 86vw); margin-top: 6px; padding: 0.8rem 1rem;
+    background: var(--bg-soft); color: var(--fg); border: 1px solid var(--line); border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    font-family: "Inter", sans-serif; font-size: 0.9rem; font-weight: 400; line-height: 1.5; text-align: left;
+  }
+  .info-pop::before { content: ""; position: absolute; left: 0; right: 0; top: -8px; height: 8px; }
+  .info-pop p { margin: 0 0 0.35rem; }
+  .info-pop p:first-child { font-weight: 600; }
+  .info-pop p:last-child { margin-bottom: 0; }
+  .info-pop a { color: var(--fg); text-decoration: underline; }
+  .info-pop a:hover { color: var(--accent); }
+  .info-wrap:hover .info-pop, .info-wrap:focus-within .info-pop, .info-wrap.open .info-pop { display: block; }
 
   /* ---------- Personal ---------- */
   .entry { border: 1px solid var(--line); border-radius: 10px; background: var(--bg-soft); margin: 0 0 0.7rem; }
@@ -161,6 +189,7 @@
     .portrait { width: 150px; height: 150px; }
     h1 { font-size: 1.9rem; }
     .paper { padding-left: 2.2rem; }
+    .paper.plain { padding-left: 0; }
     .nav-inner { gap: 0.8rem; }
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
@@ -183,6 +212,9 @@
       </a>
       <a class="icon-btn" href="https://github.com/Sangsidhya" aria-label="GitHub" title="GitHub">
         <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.37-3.87-1.37-.52-1.33-1.28-1.69-1.28-1.69-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.73-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.18-3.09-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 015.77 0c2.2-1.49 3.17-1.18 3.17-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.83 1.18 3.09 0 4.42-2.69 5.39-5.25 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+      </a>
+      <a class="icon-btn" href="https://www.youtube.com/@sangsidhyakar" aria-label="YouTube" title="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.2a3 3 0 00-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 00.5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 002.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 002.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
       </a>
       <a class="icon-btn" href="mailto:sangsidhyakar@gmail.com" aria-label="Email" title="Email">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
@@ -227,18 +259,29 @@
 
   <!-- ===================== RESEARCH ===================== -->
   <section id="research">
-    <h1>Research</h1>
+    <h1>Research<span class="info-wrap" id="rightsInfo"><button class="info-btn" type="button" aria-label="Rights and permissions" aria-expanded="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5.6"/><circle cx="12" cy="7.9" r="0.6" fill="currentColor"/></svg></button><span class="info-pop" role="tooltip"><p>Rights and permissions</p><p>Unless a manuscript states otherwise, working papers and works in progress are copyright their named authors and other applicable rights holders, with all rights reserved.</p><p>You may download and print one copy for personal scholarly use. Redistribution, modification, or commercial use requires prior written permission from all applicable rights holders. Citation, quotation, and other uses permitted by law remain unaffected.</p><p>Published versions are governed by their publisher or venue terms.</p><p><a href="LICENSE" download="LICENSE.txt">Full notice</a></p></span></span></h1>
 
-    <!-- ---------- Under review ---------- -->
-    <h2>Papers</h2>
+    <!-- ---------- Work in progress ---------- -->
+    <h2>Work in Progress</h2>
+
+    <article class="paper plain">
+      <div class="title">Meta-Learning with Generalized Ridge Regression</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">statistics</span></div>
+    </article>
+
+    <article class="paper plain">
+      <div class="title">Functional Stochastic Localization</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">probability</span><span class="tag">statistics</span></div>
+    </article>
+
+    <!-- ---------- Working papers ---------- -->
+    <h2>Working Papers</h2>
 
     <article class="paper">
-      <span class="num">[4]</span>
+      <span class="num">[7]</span>
       <div class="title">Causal Structure Meets Stackelberg Games: Exploiting Known Causal Graphs for Efficient Equilibrium Learning</div>
-      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">causal inference</span><span class="tag">game theory</span></div>
-            <div class="authors"><b>S. Kar</b>, B. Chang, J. Loi, W. Chang, A. Parafita</div>
-
-      <div class="venue">Under review</div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">causal inference</span><span class="tag">game theory</span><span class="status">Under review</span></div>
+      <div class="authors"><b>S. Kar</b>, B. Chang, J. Loi, W. Chang, A. Parafita</div>
       <details class="abs"><summary>Abstract</summary><div class="body"><p>
         We study a two-player Stackelberg game in which both players intervene on variables in a shared causal DAG. Each player's reward is generated by an unknown node of their subgraph, and identifying this node reduces their action space from \(\Theta(nK)\) interventions to \(K\). While the single-agent problem admits an \(O(\log n)\) binary search using a fixed do-nothing baseline, this baseline becomes endogenous in the game because it depends on the opponent's actions.
       </p><p>
@@ -249,11 +292,10 @@
     </article>
 
     <article class="paper">
-      <span class="num">[3]</span>
+      <span class="num">[6]</span>
       <div class="title">A Functional Scaling Law for One-Pass SGD with Feature Learning</div>
-      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">scaling laws</span></div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">learning theory</span><span class="tag">scaling laws</span><span class="status">Under review</span></div>
       <div class="authors"><b>S. Kar</b>, M. Sangal, W. Chang, D. Kim, B. Li</div>
-      <div class="venue">Under review</div>
       <details class="abs"><summary>Abstract</summary><div class="body"><p>
         The Functional Scaling Law (FSL) of Li et al. (2026) characterises the expected-loss trajectory of one-pass SGD under arbitrary learning-rate schedules when features are frozen at initialisation. In contrast, Bordelon et al. (2025) show that feature learning improves the loss exponent from \(t^{-s}\) to \(t^{-2s/(1+s)}\) for hard tasks (\(s<1\)), but provide only leading-order asymptotics for constant learning rates and noiseless targets. We extend the FSL to feature learning by showing that, under a dynamical mean-field theory (DMFT) closure assumption, the loss retains the lazy FSL's functional form under the effective-time transformation
       </p><p>
@@ -266,9 +308,9 @@
     </article>
 
     <article class="paper">
-      <span class="num">[2]</span>
+      <span class="num">[5]</span>
       <div class="title">When Known Objects Hide Unknowns: Sparse-Contamination Theory for CLIP-Based OOD Detection</div>
-      <div class="meta"><span class="tag year">2026</span><span class="tag">statistics</span><span class="tag">machine learning</span><span class="tag">OOD detection</span><span>Under review</span></div>
+      <div class="meta"><span class="tag year">2026</span><span class="tag">statistics</span><span class="tag">machine learning</span><span class="tag">OOD detection</span><span class="status">Under review</span></div>
       <div class="authors">D. Liu, <b>S. Kar</b>, R. Piao, M. Burenko, W. Chang</div>
       <details class="abs"><summary>Abstract</summary><div class="body"><p>
         Existing CLIP-based out-of-distribution (OOD) detectors generally formulate novelty as a global image-level distributional shift: an image is either entirely ID or entirely OOD. This formulation does not explicitly distinguish images in which an unknown object co-occurs with recognizable in-distribution (ID) content. Under a normalized linear pooling model, we derive a lower bound on the global MCM score and give sufficient conditions under which an image containing unknown content is nevertheless accepted as ID (masking theorem). These conditions depend on the unknown region's pooling mass, the patch margins, the pooled feature norm, and the detector's acceptance threshold. We formulate mixed-image OOD detection as structured sparse hypothesis testing over local CLIP patch features and derive finite-sample sufficient detection conditions for global sum, patch maximum, penalized adaptive top-\(k\), and spatial scan tests under independent sub-Gaussian noise. Exact Gaussian power formulas clarify the dependence of the sum and maximum on contamination size.
@@ -278,20 +320,6 @@
         Through Monte Carlo experiments, we examine the predicted dependence of detection power on object size and signal strength and identify background tails, support geometry, and evidence dispersion as additional determinants of aggregation performance. We show that clipping patch scores substantially improves scan power under skewed and heavy-tailed backgrounds while retaining strong Gaussian performance. In image-level evaluations, we measure weak local evidence for small pasted unknown regions and find that the global MCM and GL-MCM scores lead spatial scanning across the VOC area strata.
       </p></div></details>
     </article>
-
-    
-
-    <article class="paper">
-      <span class="num">[1]</span>
-      <div class="title">Proof Fragility Prediction: Step-Level Failure Localization for Efficient Neural Theorem Proving</div>
-      <div class="meta"><span class="tag year">2026</span><span class="tag">machine learning</span><span class="tag">theorem proving</span><span>In preparation</span></div>
-      <div class="authors">Z. Li, R. Sankhyan, <b>S. Kar</b>, W. Chang</div>
-    </article>
-
-    <hr>
-
-    <!-- ---------- Preprints ---------- -->
-    <h2>Preprints</h2>
 
     <article class="paper">
       <span class="num">[4]</span>
@@ -314,24 +342,20 @@
       <div class="title"><a href="https://arxiv.org/abs/2609.37535">Why Adaptive Optimizers Underestimate Rare Tokens</a></div>
       <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://arxiv.org/abs/2609.37535">arXiv</a><span class="tag">learning theory</span><span class="tag">optimization</span></div>
       <div class="authors"><b>Sangsidhya Kar</b></div>
-<details class="abs">
-  <summary>Abstract</summary>
-  <div class="body">
-    <p>
-      In the softmax output layer, a rare token receives a small positive logit gradient on most steps and a much larger negative gradient on the few steps when it is the target. SGD simply adds these contributions. Coordinate-wise adaptive methods such as Adam, RMSProp, and sign descent instead divide each update by a running estimate of its magnitude, and that estimate is largest immediately after the token appears. This imbalance has two effects.
-    </p>
-    <p>
-      <b>First, preservation of the mean output embedding.</b> At the level of the whole output layer, we characterize which optimizers preserve the mean output embedding: every method whose update is linear in past gradients does, as do Kronecker-factored and orthogonalized methods such as Shampoo and Muon. Adam, Adafactor, Lion, and sign descent do not, and for these methods we obtain an exact step-by-step expression for the change.
-    </p>
-    <p>
-      <b>Second, bias in rare-token probabilities.</b> At the level of an individual rare token, the same normalization shifts the training fixed point. In the unigram model, sign descent lowers the logit of every token that occurs in fewer than half of the minibatches at a constant expected rate. For RMSProp with periodic arrivals, we can solve the fixed point in closed form: if a token is absent for at least two consecutive minibatches, its equilibrium probability is strictly below its data frequency for every learning rate, and the ratio tends to \(\kappa/(2(e^{\kappa/2}-1))\). Here \(\kappa\) is the mean number of steps between occurrences divided by the second-moment time constant \(1/(1-\beta_2)\). In the same model, SGD and AMSGrad retain the unbiased fixed point.
-    </p>
-    <p>
-      <b>Third, empirical validation.</b> We test these predictions both in a unigram model and in a small language model trained from a known generating distribution. With random arrivals, the bias is larger than the periodic formula predicts; in the language model, the optimizers with the biased fixed point also fit the generating distribution less well.
-    </p>
-  </div>
-</details>
-</article>
+      <details class="abs"><summary>Abstract</summary><div class="body">
+        <p>
+          In the softmax output layer, a rare token receives a small positive logit gradient on most steps and a much larger negative gradient on the few steps when it is the target. SGD simply adds these contributions. Coordinate-wise adaptive methods such as Adam, RMSProp, and sign descent instead divide each update by a running estimate of its magnitude, and that estimate is largest immediately after the token appears. This imbalance has two effects.
+        </p>
+        <p>
+          <b>First, preservation of the mean output embedding.</b> At the level of the whole output layer, we characterize which optimizers preserve the mean output embedding: every method whose update is linear in past gradients does, as do Kronecker-factored and orthogonalized methods such as Shampoo and Muon. Adam, Adafactor, Lion, and sign descent do not, and for these methods we obtain an exact step-by-step expression for the change.
+        </p>
+        <p>
+          <b>Second, bias in rare-token probabilities.</b> At the level of an individual rare token, the same normalization shifts the training fixed point. In the unigram model, sign descent lowers the logit of every token that occurs in fewer than half of the minibatches at a constant expected rate. For RMSProp with periodic arrivals, we can solve the fixed point in closed form: if a token is absent for at least two consecutive minibatches, its equilibrium probability is strictly below its data frequency for every learning rate, and the ratio tends to \(\kappa/(2(e^{\kappa/2}-1))\). Here \(\kappa\) is the mean number of steps between occurrences divided by the second-moment time constant \(1/(1-\beta_2)\). In the same model, SGD and AMSGrad retain the unbiased fixed point.
+        </p>
+        <p>
+          <b>Third, empirical validation.</b> We test these predictions both in a unigram model and in a small language model trained from a known generating distribution. With random arrivals, the bias is larger than the periodic formula predicts; in the language model, the optimizers with the biased fixed point also fit the generating distribution less well.
+        </p>
+      </div></details>
     </article>
 
     <article class="paper">
@@ -353,7 +377,6 @@
       <div class="title"><a href="https://ssrn.com/abstract=6296258">Heavy-tailed private information in global games</a></div>
       <div class="meta"><span class="tag year">2026</span><a class="tag link" href="https://ssrn.com/abstract=6296258">SSRN</a><span class="tag">economic theory</span><span class="tag">heavy tails</span></div>
       <div class="authors"><b>Sangsidhya Kar</b></div>
-      
       <details class="abs"><summary>Abstract</summary><div class="body"><p>
         The standard global-games argument has three components: sufficiently extreme private signals create dominance regions, best responses to cutoff strategies are themselves cutoffs, and diffuse public information selects the Laplacian cutoff. We study how these components depend on the distribution of private noise. Tweedie's formula links dominance to the posterior mean: dominance regions exist for every public precision exactly when the posterior mean can leave the unit interval. Cutoff best responses for all parameters are equivalent to log-concavity of the private-noise density.
       </p><p>
@@ -462,6 +485,20 @@
   }
   window.addEventListener("hashchange", show);
   show();
+
+  // ---- Info popover: hover/focus via CSS, click toggles for touch screens ----
+  (function () {
+    var wrap = document.getElementById("rightsInfo");
+    var btn = wrap.querySelector(".info-btn");
+    function setOpen(o) {
+      wrap.classList.toggle("open", o);
+      btn.setAttribute("aria-expanded", o ? "true" : "false");
+    }
+    btn.addEventListener("click", function (e) { e.stopPropagation(); setOpen(!wrap.classList.contains("open")); });
+    document.addEventListener("click", function (e) { if (!wrap.contains(e.target)) setOpen(false); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+    window.addEventListener("hashchange", function () { setOpen(false); });
+  })();
 
   // ---- Theme toggle ----
   document.getElementById("themeToggle").addEventListener("click", function () {
